@@ -15,6 +15,16 @@ describe('Requests to the root path',function(){
         done();
       });
   });
+  it('Returns a HTML format',function(done){
+    request(app)
+    .get('/')
+    .expect("Content-Type",/html/,done);
+  });
+  it('Returns an index file with Cities',function(done){
+    request(app)
+    .get("/")
+    .expect("/cities/i",done); //the /i behind cities makes it case insensitive
+  });
 });
 describe('Listing cities',function(){
   it('Returns a 200 status code',function(done){
