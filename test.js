@@ -22,4 +22,9 @@ describe('Listing cities',function(){
     .get('/cities') //searches for the cities endpoint (address)
     .expect(200,done); //alternative way of writing above code
   });
+  it('Returns JSON format', function(done){
+    request(app)
+    .get('/cities')
+    .expect('Content-Type',/json/,done);
+  });
 });

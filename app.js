@@ -6,7 +6,7 @@ app.get('/',function(req,resp){
 });
 
 app.get('/cities',function(req,resp){
-  resp.send('OK');
+  resp.json('OK');
 });
 
 //app.listen(3000);
