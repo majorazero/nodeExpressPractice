@@ -27,4 +27,9 @@ describe('Listing cities',function(){
     .get('/cities')
     .expect('Content-Type',/json/,done);
   });
+  it("Returns initial cities", function(done){
+    request(app)
+    .get("/cities")
+    .expect(JSON.stringify(["Los Angeles", "San Francisco", "London"]),done);
+  });
 });

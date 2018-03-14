@@ -6,7 +6,8 @@ app.get('/',function(req,resp){
 });
 
 app.get('/cities',function(req,resp){
-  resp.json('OK');
+  let cities = ["Los Angeles","San Francisco","London"];
+  resp.json(cities);
 });
 
 //app.listen(3000);
