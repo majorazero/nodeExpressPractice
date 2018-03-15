@@ -44,3 +44,18 @@ describe('Listing cities',function(){
     .expect(JSON.stringify(["Los Angeles", "San Francisco", "London"]),done);
   });
 });
+
+describe("Creating new cities", function(){
+  it("Returns a 201 status code", function(done){
+    request(app)
+    .post("/cities")
+    .send("name=Springfield&description=where+the+Simpsons+live")
+    .expect(201,done);
+  });
+  it("Returns a city name",function(done){
+    request(app)
+    .post("/cities")
+    .send("name=Springfield&description=where+the+Simpsons+live")
+    .expect(/springfield/i,done);
+  });
+});
