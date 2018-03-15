@@ -26,6 +26,7 @@ describe('Requests to the root path',function(){
     .expect("/cities/i",done); //the /i behind cities makes it case insensitive
   });
 });
+
 describe('Listing cities',function(){
   it('Returns a 200 status code',function(done){
     request(app)
