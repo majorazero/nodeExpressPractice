@@ -1,7 +1,11 @@
 //Created to test our app
-var request = require('supertest');
-var app = require('./app');
+let request = require('supertest');
+let app = require('./app');
+let redis = require("redis");
+let client = redis.createClient();
 
+client.select("test".length);
+client.flushdb();
 //following is mocha code
 
 describe('Requests to the root path',function(){
@@ -41,7 +45,7 @@ describe('Listing cities',function(){
   it("Returns initial cities", function(done){
     request(app)
     .get("/cities")
-    .expect(JSON.stringify(["Los Angeles", "San Francisco", "London"]),done);
+    .expect(JSON.stringify([]),done);
   });
 });
 
