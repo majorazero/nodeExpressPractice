@@ -1,11 +1,8 @@
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
-let urlencode = bodyParser.urlencoded({extended:false});
+let urlencode = bodyParser.urlencoded({extended:false}); //added as middleware which converts input into requests's body
 
-// app.get('/',function(req,resp){
-//   resp.send('OK');
-// });
 app.use(express.static('public')); //mounts middleware
 
 let cities = {
@@ -18,7 +15,7 @@ app.get('/cities',function(req,resp){
   resp.json(Object.keys(cities));
 });
 
-app.post('/cities',urlencode,function(req,resp){
+app.post('/cities',urlencode,function(req,resp){ //middleware can be passed as a inbetween argument
   let newCity = req.body;
   cities[newCity.name] = newCity.description;
   resp.status(201).json(newCity.name);
