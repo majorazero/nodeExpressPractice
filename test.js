@@ -6,6 +6,7 @@ let client = redis.createClient();
 
 client.select("test".length);
 client.flushdb();
+
 //following is mocha code
 
 describe('Requests to the root path',function(){
