@@ -5,11 +5,18 @@ let urlencode = bodyParser.urlencoded({extended:false}); //added as middleware w
 
 app.use(express.static('public')); //mounts middleware
 
-let cities = {
-        "Los Angeles": "Sunny place to be.",
-        "San Francisco": "Gloomy place to be.",
-        "London": "All hail the queen."
-      };
+let redis = require('redis');
+let client = redis.createClient();
+
+client.hset("cities","Los Angeles","Sunny place to be.");
+client.hset("cities","San Francisco","Gloomy place to be.");
+client.hset("cities","London","All hail the queen.");
+
+// let cities = {
+//         "Los Angeles": "Sunny place to be.",
+//         "San Francisco": "Gloomy place to be.",
+//         "London": "All hail the queen."
+//       };
 
 app.get('/cities',function(req,resp){
   resp.json(Object.keys(cities));
