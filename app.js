@@ -1,9 +1,10 @@
 let express = require("express");
 let app = express();
 
-app.get('/',function(req,resp){
-  resp.send('OK');
-});
+// app.get('/',function(req,resp){
+//   resp.send('OK');
+// });
+app.use(express.static('public')); //mounts middleware
 
 app.get('/cities',function(req,resp){
   let cities = ["Los Angeles","San Francisco","London"];

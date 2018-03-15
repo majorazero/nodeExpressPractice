@@ -23,7 +23,7 @@ describe('Requests to the root path',function(){
   it('Returns an index file with Cities',function(done){
     request(app)
     .get("/")
-    .expect("/cities/i",done); //the /i behind cities makes it case insensitive
+    .expect(/cities/i,done); //the /i behind cities makes it case insensitive also we don't use double quotation because its a property
   });
 });
 
