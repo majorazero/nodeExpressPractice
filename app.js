@@ -8,7 +8,7 @@ app.use(express.static('public')); //mounts middleware
 let redis = require('redis');
 if (process.env.REDISTOGO_URL) {
   let rtg   = require("url").parse(process.env.REDISTOGO_URL);
-  let client = redis.createClient(rtg.port, rtg.hostname);
+  var client = redis.createClient(rtg.port, rtg.hostname);
   client.auth(rtg.auth.split(":")[1]);
 }
 else {
