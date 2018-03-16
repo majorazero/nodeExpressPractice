@@ -32,6 +32,10 @@ app.get('/cities',function(req,resp){
 });
 app.post('/cities',urlencode,function(req,resp){ //middleware can be passed as a inbetween argument
   let newCity = req.body;
+  if(!newCity.name || !newCity.description){
+    resp.sendStatus(400);
+    return false; //does this so it exits
+  }
   client.hset("cities",newCity.name,newCity.description,function(error){
     if (error) throw error;
     resp.status(201).json(newCity.name);
