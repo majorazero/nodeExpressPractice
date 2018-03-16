@@ -4,20 +4,25 @@ let bodyParser = require("body-parser");
 let urlencode = bodyParser.urlencoded({extended:false}); //added as middleware which converts input into requests's body
 
 app.use(express.static('public')); //mounts middleware
-
+//redis connection
 let redis = require('redis');
-let client = redis.createClient();
-client.select((process.env.NODE_ENV || "development").length); //each production will have a differnet client based on their different sizes.
+if (process.env.REDISTOGO_URL) {
+  let rtg   = require("url").parse(process.env.REDISTOGO_URL);
+  let client = redis.createClient(rtg.port, rtg.hostname);
+  client.auth(rtg.auth.split(":")[1]);
+}
+else {
+  console.log(2);
+  var client = redis.createClient();
+  console.log(3);
+  client.select((process.env.NODE_ENV || "development").length); //each production will have a differnet client based on their different sizes.
+}
+
+//end redis connection
 
 client.hset("cities","Los Angeles","Sunny place to be.");
 client.hset("cities","San Francisco","Gloomy place to be.");
 client.hset("cities","London","All hail the queen.");
-
-// let cities = {
-//         "Los Angeles": "Sunny place to be.",
-//         "San Francisco": "Gloomy place to be.",
-//         "London": "All hail the queen."
-//       };
 
 app.get('/cities',function(req,resp){
   client.hkeys("cities",function(error, names){
