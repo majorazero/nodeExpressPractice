@@ -30,6 +30,15 @@ app.get('/cities',function(req,resp){
     //resp.json(Object.keys(cities));
   });
 });
+app.get("/cities/:name",function(req,resp){
+  client.hget("cities",req.params.name,function(error,description){
+     // this is a npm install ejs function, no need to require and will automatically look for things in a views folder
+    resp.render("show.ejs",
+                {city:{name:req.params.name,
+                        description: description}
+                      });
+  });
+});
 app.post('/cities',urlencode,function(req,resp){ //middleware can be passed as a inbetween argument
   let newCity = req.body;
   if(!newCity.name || !newCity.description){
