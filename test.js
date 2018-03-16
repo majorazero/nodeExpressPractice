@@ -103,6 +103,6 @@ describe("Show city info", function(){
   it("Returns information for a given city",function(done){
     request(app)
     .get("/cities/Banana")
-    .expect("LOL, this is not a city.\n",done);
+    .expect(/LOL/,done);
   });
 });
