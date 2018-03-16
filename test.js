@@ -64,3 +64,16 @@ describe("Creating new cities", function(){
     .expect(/springfield/i,done);
   });
 });
+describe("Deleting cities",function(){
+  before(function(){
+    client.hset('cities','Banana','LOL, this is not a city.'); //our test case.
+  });
+  after(function(){
+    client.flushdb(); //so it won't return an error on an earlier test because it's returning 'Banana'
+  });
+  it("Returns a 204 status code",function(done){
+    request(app)
+    .delete('/cities/Banana')
+    .expect(204,done);
+  });
+});

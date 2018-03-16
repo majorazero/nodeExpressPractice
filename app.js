@@ -8,13 +8,11 @@ app.use(express.static('public')); //mounts middleware
 let redis = require('redis');
 if (process.env.REDISTOGO_URL) {
   let rtg   = require("url").parse(process.env.REDISTOGO_URL);
-  var client = redis.createClient(rtg.port, rtg.hostname);
+  var client = redis.createClient(rtg.port, rtg.hostname); //for whatever reason client needs to be called using "var" or app will break.
   client.auth(rtg.auth.split(":")[1]);
 }
 else {
-  console.log(2);
   var client = redis.createClient();
-  console.log(3);
   client.select((process.env.NODE_ENV || "development").length); //each production will have a differnet client based on their different sizes.
 }
 
@@ -40,7 +38,12 @@ app.post('/cities',urlencode,function(req,resp){ //middleware can be passed as a
     // cities[newCity.name] = newCity.description;
     // resp.status(201).json(newCity.name);
   });
-
+});
+app.delete('/cities/:name',function(req,resp){
+  client.hdel('cities',req.params.name,function(error){
+    if(error) throw error;
+    resp.sendStatus(204);
+  });
 });
 
 //app.listen(3000);
