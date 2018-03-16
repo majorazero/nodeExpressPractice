@@ -51,6 +51,9 @@ describe('Listing cities',function(){
 });
 
 describe("Creating new cities", function(){
+  after(function(){
+    client.flushdb();
+  });
   it("Returns a 201 status code", function(done){
     request(app)
     .post("/cities")
